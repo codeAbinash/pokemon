@@ -1,3 +1,5 @@
+"use client";
+  
 import { memo, useState, useEffect } from "react";
 
 type InputProps = {

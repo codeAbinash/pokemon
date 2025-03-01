@@ -1,7 +1,7 @@
 import { PokemonImage } from "@/components/PokemonImage";
 import TopPart from "@/components/TopPart";
 import { api, colorMap } from "@/utils/utils";
-import { Power, Ruler, Star, Type, Weight } from "lucide-react"; // Import Lucide icons
+import { BarChart, Move, Power, Ruler, Star, Type, Weight } from "lucide-react"; // Import Lucide icons
 import { Pokemon } from "pokenode-ts";
 
 export async function fetchPokemon(name: string): Promise<Pokemon> {
@@ -32,7 +32,7 @@ export default async function PokemonDetail({ params }: PokemonDetailsProps) {
       <div className="relative flex justify-center items-center flex-col z-10">
         <h1 className="text-4xl capitalize font-bold mb-4">{pokemon.name}</h1>
         <PokemonImage id={pokemon.id} />
-        <div className="mt-5 flex flex-col text-left gap-2 bg-white text-sm text-black p-6 rounded-3xl shadow-lg w-80">
+        <div className="mt-5 flex flex-roe flex-wrap gap-4 text-left gap-x-5 bg-white text-sm text-black p-6 rounded-3xl shadow-lg w-xl">
           <p>
             <Ruler className="inline-block mr-2" />
             <span className="font-medium">Height:</span> {pokemon.height} dm
@@ -67,6 +67,30 @@ export default async function PokemonDetail({ params }: PokemonDetailsProps) {
                 className="inline-block bg-gray-200 text-gray-800 px-2.5 py-0.5 rounded-full mr-2"
               >
                 {abilityInfo.ability.name}
+              </span>
+            ))}
+          </p>
+          <p className="mb-2 gap-1 flex flex-wrap">
+            <BarChart className="inline-block mr-2" />
+            <span className="font-medium">Stats:</span>{" "}
+            {pokemon.stats.map((statInfo) => (
+              <span
+                key={statInfo.stat.name}
+                className="inline-block bg-gray-200 text-gray-800 px-2.5 py-0.5 rounded-full mr-2"
+              >
+                {statInfo.stat.name}: {statInfo.base_stat}
+              </span>
+            ))}
+          </p>
+          <p className="mb-2 gap-1 flex flex-wrap">
+            <Move className="inline-block mr-2" />
+            <span className="font-medium">Moves:</span>{" "}
+            {pokemon.moves.slice(0, 5).map((moveInfo) => (
+              <span
+                key={moveInfo.move.name}
+                className="inline-block bg-gray-200 text-gray-800 px-2.5 py-0.5 rounded-full mr-2"
+              >
+                {moveInfo.move.name}
               </span>
             ))}
           </p>

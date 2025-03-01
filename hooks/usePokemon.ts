@@ -1,3 +1,5 @@
+"use client";
+
 import { api } from "@/utils/utils";
 import { NamedAPIResource, NamedAPIResourceList } from "pokenode-ts";
 import { useEffect, useRef, useState } from "react";
