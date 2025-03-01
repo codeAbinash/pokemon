@@ -1,3 +1,5 @@
+"use client"; // Add this directive
+
 import DebouncedInput from "@/components/DebouncedInput";
 import { Loading } from "@/components/Loading";
 import { NotFound } from "@/components/NotFound";

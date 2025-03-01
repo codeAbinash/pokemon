@@ -4,25 +4,25 @@ import { api, colorMap } from "@/utils/utils";
 import { BarChart, Move, Power, Ruler, Star, Type, Weight } from "lucide-react"; // Import Lucide icons
 import { Pokemon } from "pokenode-ts";
 
-export async function fetchPokemon(name: string): Promise<Pokemon> {
+async function fetchPokemon(name: string): Promise<Pokemon> {
   return await api.getPokemonByName(name);
 }
 
-export async function fetchPokemonColor(name: string): Promise<string> {
+async function fetchPokemonColor(name: string): Promise<string> {
   const species = await api.getPokemonSpeciesByName(name);
   return species.color.name;
 }
-
-export type PokemonDetailsProps = {
-  params: {
+type PokemonDetailsProps = {
+  params: Promise<{
     name: string;
-  };
+  }>;
 };
 
 export default async function PokemonDetail({ params }: PokemonDetailsProps) {
-  const pokemon = await fetchPokemon(params.name);
-  const color = (await fetchPokemonColor(params.name)) as keyof typeof colorMap;
-  console.log(pokemon.id);
+  const resolvedParams = await params;
+  const name = resolvedParams.name;
+  const pokemon = await fetchPokemon(name);
+  const color = (await fetchPokemonColor(name)) as keyof typeof colorMap;
 
   const bgColorClass = colorMap[color] || "from-gray-500 to-gray-300";
 
@@ -32,7 +32,7 @@ export default async function PokemonDetail({ params }: PokemonDetailsProps) {
       <div className="relative flex justify-center items-center flex-col z-10">
         <h1 className="text-4xl capitalize font-bold mb-4">{pokemon.name}</h1>
         <PokemonImage id={pokemon.id} />
-        <div className="mt-5 flex flex-roe flex-wrap gap-4 text-left gap-x-5 bg-white text-sm text-black p-6 rounded-3xl shadow-lg w-xl">
+        <div className="mt-5 flex flex-row flex-wrap gap-4 text-left gap-x-5 bg-white text-sm text-black p-6 rounded-3xl shadow-lg w-xl">
           <p>
             <Ruler className="inline-block mr-2" />
             <span className="font-medium">Height:</span> {pokemon.height} dm
